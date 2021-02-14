@@ -96,7 +96,29 @@ EditProductScreen.navigationOptions = (navData) => {
   const mode = navData.navigation.getParam("mode");
   return {
     headerTitle: () =>
-      mode === "add" ? <Text>Add New Product</Text> : <Text>Edit Product</Text>,
+      mode === "add" ? (
+        <Text
+          style={{
+            textAlign: "center",
+            fontWeight: "bold",
+            color: COLORS.primary,
+            fontSize: 18,
+          }}
+        >
+          Add New Product
+        </Text>
+      ) : (
+        <Text
+          style={{
+            textAlign: "center",
+            fontWeight: "bold",
+            color: COLORS.primary,
+            fontSize: 18,
+          }}
+        >
+          Edit Product
+        </Text>
+      ),
     headerBackTitle: "Back",
   };
 };
