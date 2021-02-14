@@ -66,16 +66,7 @@ const EditProductScreen = ({ navigation }) => {
               })
             }
           />
-          <Text style={styles.label}>Amount</Text>
-          <TextInput
-            style={styles.input}
-            value={productValues.amount.toString()}
-            onChangeText={(text) =>
-              setProductValues({
-                amount: parseInt(text),
-              })
-            }
-          />
+
           <Text style={styles.label}>Description</Text>
           <TextInput
             multiline={true}

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { Avatar, Button, Card, Paragraph } from "react-native-paper";
+import { Button, Card } from "react-native-paper";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -24,7 +24,18 @@ const MyProductsScreen = ({ navigation }) => {
 
 MyProductsScreen.navigationOptions = (navData) => {
   return {
-    headerTitle: () => <Text>Your Products</Text>,
+    headerTitle: () => (
+      <Text
+        style={{
+          textAlign: "center",
+          fontWeight: "bold",
+          color: COLORS.primary,
+          fontSize: 18,
+        }}
+      >
+        Your Products
+      </Text>
+    ),
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
