@@ -145,12 +145,12 @@ const CartScreen = ({ navigation }) => {
       </View>
       <View style={styles.totalContainer}>
         <Button
-          mode="contained"
+          mode="outlined"
           style={styles.checkoutButton}
           color={COLORS.accent}
           icon="sticker-check-outline"
         >
-          <Text style={{ color: "white" }}>Checkout</Text>
+          <Text>Checkout</Text>
         </Button>
       </View>
     </ScrollView>

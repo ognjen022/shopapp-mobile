@@ -43,6 +43,32 @@ const PaymentMethodScreen = () => {
           style={styles.checkIcon}
         />
       </TouchableOpacity>
+
+      <TouchableOpacity
+        style={{
+          ...styles.paymentItem,
+          borderWidth: selectedMethod === 3 ? 2 : 0,
+          borderColor: COLORS.primary,
+        }}
+        onPress={() => setSelectedMethod(3)}
+      >
+        <FontAwesome
+          name="cc-mastercard"
+          size={50}
+          color={COLORS.primary}
+          style={styles.paymentIcon}
+        />
+        <Text style={styles.paymentItemText}>**** **** **** 5967</Text>
+        <AntDesign
+          name="checkcircle"
+          size={24}
+          color={selectedMethod === 3 ? COLORS.accent : "white"}
+          style={styles.checkIcon}
+        />
+      </TouchableOpacity>
+      <Text style={{ marginLeft: 25, fontSize: 20, fontWeight: "bold" }}>
+        PayPal
+      </Text>
       <TouchableOpacity
         style={{
           ...styles.paymentItem,
@@ -64,28 +90,6 @@ const PaymentMethodScreen = () => {
           name="checkcircle"
           size={24}
           color={selectedMethod === 2 ? COLORS.accent : "white"}
-          style={styles.checkIcon}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          ...styles.paymentItem,
-          borderWidth: selectedMethod === 3 ? 2 : 0,
-          borderColor: COLORS.primary,
-        }}
-        onPress={() => setSelectedMethod(3)}
-      >
-        <FontAwesome
-          name="cc-mastercard"
-          size={50}
-          color={COLORS.primary}
-          style={styles.paymentIcon}
-        />
-        <Text style={styles.paymentItemText}>**** **** **** 5967</Text>
-        <AntDesign
-          name="checkcircle"
-          size={24}
-          color={selectedMethod === 3 ? COLORS.accent : "white"}
           style={styles.checkIcon}
         />
       </TouchableOpacity>
