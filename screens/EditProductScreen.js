@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
-  View,
   Text,
   TextInput,
   StyleSheet,
   Dimensions,
   ScrollView,
-  Image,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SliderBox } from "react-native-image-slider-box";
@@ -29,9 +27,8 @@ const EditProductScreen = ({ navigation }) => {
           description: "",
           images: [],
         };
-  const [productValues, setProductValues] = useState(initialState);
 
-  console.log(productValues);
+  const [productValues, setProductValues] = useState(initialState);
 
   useEffect(() => {
     (async () => {
@@ -54,14 +51,16 @@ const EditProductScreen = ({ navigation }) => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       setProductValues({
         ...productValues,
-        images: [...images, result.uri],
+        images: [...productValues.images, result.uri],
       });
     }
+  };
+
+  const onSubmit = () => {
+    console.log(productValues);
   };
 
   return (
@@ -72,6 +71,7 @@ const EditProductScreen = ({ navigation }) => {
         value={productValues.title}
         onChangeText={(text) =>
           setProductValues({
+            ...productValues,
             title: text,
           })
         }
@@ -82,6 +82,7 @@ const EditProductScreen = ({ navigation }) => {
         value={productValues.subtitle}
         onChangeText={(text) =>
           setProductValues({
+            ...productValues,
             subtitle: text,
           })
         }
@@ -92,6 +93,7 @@ const EditProductScreen = ({ navigation }) => {
         value={productValues.category}
         onChangeText={(text) =>
           setProductValues({
+            ...productValues,
             category: text,
           })
         }
@@ -102,7 +104,8 @@ const EditProductScreen = ({ navigation }) => {
         value={productValues.price.toString()}
         onChangeText={(text) =>
           setProductValues({
-            price: parseInt(text),
+            ...productValues,
+            price: !isNaN(text) ? parseInt(text) : "",
           })
         }
       />
@@ -115,22 +118,29 @@ const EditProductScreen = ({ navigation }) => {
         value={productValues.description}
         onChangeText={(text) =>
           setProductValues({
+            ...productValues,
             description: text,
           })
         }
       />
       <Text style={styles.label}>Images</Text>
-      <SliderBox
-        sliderBoxHeight={250}
-        images={product.images}
-        dotColor={COLORS.primary}
-      />
+      {productValues.images.length > 0 ? (
+        <SliderBox
+          sliderBoxHeight={250}
+          images={productValues?.images}
+          dotColor={COLORS.primary}
+        />
+      ) : null}
 
       <Button style={styles.imageButton} onPress={pickImage}>
         <Text style={{ color: "#fff" }}>Choose an image</Text>
       </Button>
 
-      <Button mode="contained" style={styles.submitButton} onPress={() => {}}>
+      <Button
+        mode="contained"
+        style={styles.submitButton}
+        onPress={() => onSubmit()}
+      >
         <Text style={{ color: "#fff" }}>Save</Text>
       </Button>
     </ScrollView>
