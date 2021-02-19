@@ -18,6 +18,7 @@ import COLORS from "../consts/colors";
 const CartScreen = ({ navigation }) => {
   const cartProducts = useSelector((state) => state.cart);
   const addressInfo = useSelector((state) => state.address);
+  const userInfo = useSelector((state) => state.user);
 
   if (cartProducts.length === 0)
     return (
@@ -45,7 +46,44 @@ const CartScreen = ({ navigation }) => {
         renderItem={({ item }) => <CartItem item={item} />}
       />
 
-      <Text style={styles.deliveryLocationText}>Delivery Location</Text>
+      <Text style={styles.subHeaderText}>Customer Info</Text>
+      <View style={{ flexDirection: "row" }}>
+        <View style={styles.deliveryLocationIcon}>
+          <Entypo name="user" size={24} color={COLORS.primary} />
+        </View>
+        <View style={{ marginTop: 25, marginLeft: 10, width: 150 }}>
+          {userInfo.firstName &&
+          userInfo.lastName &&
+          userInfo.phone &&
+          userInfo.email ? (
+            <>
+              <Text style={{ fontWeight: "bold" }}>
+                {userInfo?.firstName} {userInfo?.lastName}{" "}
+              </Text>
+
+              <Text style={{ fontWeight: "300", color: "gray" }}>
+                {userInfo?.phone}
+              </Text>
+              <Text style={{ fontWeight: "300", color: "gray" }}>
+                {userInfo?.email.length > 12
+                  ? userInfo.email.substring(0, 14) + "..."
+                  : userInfo.email}
+              </Text>
+            </>
+          ) : (
+            <Text style={{ fontWeight: "bold" }}>
+              Please fill in your info correctly.
+            </Text>
+          )}
+        </View>
+        <View style={styles.paymentMethodChevronIcon}>
+          <TouchableOpacity onPress={() => navigation.navigate("UserInfo")}>
+            <Entypo name="chevron-right" size={32} color="black" />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <Text style={styles.subHeaderText}>Delivery Location</Text>
       <View style={{ flexDirection: "row" }}>
         <View style={styles.deliveryLocationIcon}>
           <Entypo name="location" size={24} color={COLORS.primary} />
@@ -84,7 +122,7 @@ const CartScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <Text style={styles.paymentMethodText}>Payment Method</Text>
+      <Text style={styles.subHeaderText}>Payment Method</Text>
       <View style={{ flexDirection: "row" }}>
         <View style={styles.deliveryLocationIcon}>
           <Entypo name="credit-card" size={24} color={COLORS.primary} />
@@ -102,7 +140,7 @@ const CartScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <Text style={styles.deliveryLocationText}>Order Info</Text>
+      <Text style={styles.subHeaderText}>Order Info</Text>
       <View
         style={{
           flexDirection: "row",
@@ -179,13 +217,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontWeight: "bold",
   },
-  deliveryLocationText: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginLeft: 20,
-    marginTop: 20,
-  },
-  paymentMethodText: {
+  subHeaderText: {
     fontSize: 22,
     fontWeight: "bold",
     marginLeft: 20,
@@ -196,8 +228,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: "white",
     borderWidth: 1,
+    height: 50,
     borderColor: "white",
-    padding: 10,
+    padding: 11.5,
     borderRadius: 30,
     width: 50,
   },
