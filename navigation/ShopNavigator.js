@@ -14,6 +14,7 @@ import {
   ShopScreen,
   UserAddressScreen,
   PaymentMethodScreen,
+  UserInfoScreen,
 } from "../screens";
 import COLORS from "../consts/colors";
 
@@ -30,6 +31,7 @@ const StackNavigator = createStackNavigator({
   Shop: ShopScreen,
   Cart: CartScreen,
   UserAddress: UserAddressScreen,
+  UserInfo: UserInfoScreen,
   PaymentMethod: PaymentMethodScreen,
   ProductDetail: ProductDetailScreen,
 });
