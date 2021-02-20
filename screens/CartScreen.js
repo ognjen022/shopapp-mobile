@@ -257,7 +257,8 @@ const styles = StyleSheet.create({
   checkoutButton: {
     borderWidth: 1,
     borderColor: COLORS.accent,
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 30,
     paddingHorizontal: 30,
     paddingVertical: 10,
   },
