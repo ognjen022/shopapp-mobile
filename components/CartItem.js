@@ -33,7 +33,14 @@ const CartItem = ({ item }) => {
                   fontSize: 16,
                 }}
               >
-                ${(item.price * item.amount).toFixed(2)}
+                $
+                {item.discount > 0
+                  ? (
+                      item.price *
+                      (1 - item.discount * 0.01) *
+                      item.amount
+                    ).toFixed(2)
+                  : (item.price * item.amount).toFixed(2)}
               </Text>
             </View>
           </View>

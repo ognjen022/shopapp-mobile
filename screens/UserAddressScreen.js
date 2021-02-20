@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Dimensions, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Dimensions,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { TextInput, Button } from "react-native-paper";
 import MapView, { Marker } from "react-native-maps";
@@ -86,91 +93,93 @@ const UserAddressScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
-      {location ? (
-        <MapView
-          initialRegion={{
-            longitudeDelta: LONGITUDE_DELTA,
-            latitudeDelta: LATITUDE_DELTA,
-            ...location,
-          }}
-          style={styles.map}
-        >
-          <Marker coordinate={location} />
-        </MapView>
-      ) : (
-        <MapView style={styles.map}></MapView>
-      )}
-      <Spinner
-        visible={loading}
-        textContent={"Loading your location..."}
-        textStyle={styles.spinnerTextStyle}
-      />
-      <View style={{ marginTop: 50, alignItems: "center" }}>
-        <TextInput
-          style={{ width: 300 }}
-          error={!country && formSubmitted}
-          mode="outlined"
-          label="Country"
-          value={country}
-          onChangeText={(text) => setCountry(text)}
+    <KeyboardAvoidingView keyboardVerticalOffset={40} behavior="padding">
+      <ScrollView>
+        {location ? (
+          <MapView
+            initialRegion={{
+              longitudeDelta: LONGITUDE_DELTA,
+              latitudeDelta: LATITUDE_DELTA,
+              ...location,
+            }}
+            style={styles.map}
+          >
+            <Marker coordinate={location} />
+          </MapView>
+        ) : (
+          <MapView style={styles.map}></MapView>
+        )}
+        <Spinner
+          visible={loading}
+          textContent={"Loading your location..."}
+          textStyle={styles.spinnerTextStyle}
         />
-        <TextInput
-          style={{ width: 300 }}
-          error={!city && formSubmitted}
-          mode="outlined"
-          label="City"
-          value={city}
-          onChangeText={(text) => setCity(text)}
-        />
-        <TextInput
-          style={{ width: 300 }}
-          error={!zip && formSubmitted}
-          mode="outlined"
-          label="Zip/Postal Code"
-          value={zip}
-          onChangeText={(text) => setZip(text)}
-        />
-        <TextInput
-          style={{ width: 300 }}
-          error={!street && formSubmitted}
-          mode="outlined"
-          label="Street"
-          value={street}
-          onChangeText={(text) => setStreet(text)}
-        />
-        <View style={{ flexDirection: "row", padding: 10 }}>
+        <View style={{ marginTop: 50, alignItems: "center" }}>
           <TextInput
-            style={{ width: 145, marginRight: 5 }}
+            style={{ width: 300 }}
+            error={!country && formSubmitted}
             mode="outlined"
-            error={!addressNumber && formSubmitted}
-            label="Address number"
-            value={addressNumber}
-            onChangeText={(text) => setAddressNumber(text)}
+            label="Country"
+            value={country}
+            onChangeText={(text) => setCountry(text)}
           />
           <TextInput
-            style={{ width: 145, marginLeft: 5 }}
+            style={{ width: 300 }}
+            error={!city && formSubmitted}
             mode="outlined"
-            error={!apartment && formSubmitted}
-            label="Apartment number"
-            value={apartment}
-            onChangeText={(text) => setApartment(text)}
+            label="City"
+            value={city}
+            onChangeText={(text) => setCity(text)}
           />
-        </View>
+          <TextInput
+            style={{ width: 300 }}
+            error={!zip && formSubmitted}
+            mode="outlined"
+            label="Zip/Postal Code"
+            value={zip}
+            onChangeText={(text) => setZip(text)}
+          />
+          <TextInput
+            style={{ width: 300 }}
+            error={!street && formSubmitted}
+            mode="outlined"
+            label="Street"
+            value={street}
+            onChangeText={(text) => setStreet(text)}
+          />
+          <View style={{ flexDirection: "row", padding: 10 }}>
+            <TextInput
+              style={{ width: 145, marginRight: 5 }}
+              mode="outlined"
+              error={!addressNumber && formSubmitted}
+              label="Address number"
+              value={addressNumber}
+              onChangeText={(text) => setAddressNumber(text)}
+            />
+            <TextInput
+              style={{ width: 145, marginLeft: 5 }}
+              mode="outlined"
+              error={!apartment && formSubmitted}
+              label="Apartment number"
+              value={apartment}
+              onChangeText={(text) => setApartment(text)}
+            />
+          </View>
 
-        {errorMessage ? (
-          <Text style={styles.errorMessageText}>{errorMessage}</Text>
-        ) : null}
-        <Button
-          onPress={handleForm}
-          mode="outlined"
-          color={COLORS.primary}
-          style={styles.confirmButton}
-        >
-          CONFIRM
-        </Button>
-      </View>
-    </ScrollView>
+          {errorMessage ? (
+            <Text style={styles.errorMessageText}>{errorMessage}</Text>
+          ) : null}
+          <Button
+            onPress={handleForm}
+            mode="outlined"
+            color={COLORS.primary}
+            style={styles.confirmButton}
+          >
+            CONFIRM
+          </Button>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
