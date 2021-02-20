@@ -47,7 +47,10 @@ const CartScreen = ({ navigation }) => {
       />
 
       <Text style={styles.subHeaderText}>Customer Info</Text>
-      <View style={{ flexDirection: "row" }}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("UserInfo")}
+        style={{ flexDirection: "row" }}
+      >
         <View style={styles.deliveryLocationIcon}>
           <Entypo name="user" size={24} color={COLORS.primary} />
         </View>
@@ -76,15 +79,16 @@ const CartScreen = ({ navigation }) => {
             </Text>
           )}
         </View>
-        <View style={styles.paymentMethodChevronIcon}>
-          <TouchableOpacity onPress={() => navigation.navigate("UserInfo")}>
-            <Entypo name="chevron-right" size={32} color="black" />
-          </TouchableOpacity>
+        <View style={styles.chevronIcon}>
+          <Entypo name="chevron-right" size={32} color="black" />
         </View>
-      </View>
+      </TouchableOpacity>
 
       <Text style={styles.subHeaderText}>Delivery Location</Text>
-      <View style={{ flexDirection: "row" }}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("UserAddress")}
+        style={{ flexDirection: "row" }}
+      >
         <View style={styles.deliveryLocationIcon}>
           <Entypo name="location" size={24} color={COLORS.primary} />
         </View>
@@ -110,35 +114,32 @@ const CartScreen = ({ navigation }) => {
             </Text>
           )}
         </View>
-        <View style={styles.deliveryLocationChevronIcon}>
-          <TouchableOpacity>
-            <Entypo
-              name="chevron-right"
-              size={32}
-              color="black"
-              onPress={() => navigation.navigate("UserAddress")}
-            />
-          </TouchableOpacity>
+        <View style={styles.chevronIcon}>
+          <Entypo name="chevron-right" size={32} color="black" />
         </View>
-      </View>
+      </TouchableOpacity>
 
       <Text style={styles.subHeaderText}>Payment Method</Text>
-      <View style={{ flexDirection: "row" }}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("PaymentMethod")}
+        style={{ flexDirection: "row" }}
+      >
         <View style={styles.deliveryLocationIcon}>
           <Entypo name="credit-card" size={24} color={COLORS.primary} />
         </View>
-        <View style={{ marginTop: 25, marginLeft: 10, width: 150 }}>
+        <View
+          style={{
+            marginTop: 25,
+            marginLeft: 10,
+          }}
+        >
           <Text style={{ fontWeight: "bold" }}>VISA Classic</Text>
           <Text style={{ fontWeight: "300", color: "gray" }}>****-0921</Text>
         </View>
-        <View style={styles.paymentMethodChevronIcon}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("PaymentMethod")}
-          >
-            <Entypo name="chevron-right" size={32} color="black" />
-          </TouchableOpacity>
+        <View style={styles.chevronIcon}>
+          <Entypo name="chevron-right" size={32} color="black" />
         </View>
-      </View>
+      </TouchableOpacity>
 
       <Text style={styles.subHeaderText}>Order Info</Text>
       <View
@@ -234,15 +235,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     width: 50,
   },
-  deliveryLocationChevronIcon: {
+  chevronIcon: {
     marginTop: 25,
-    marginLeft: Dimensions.get("window").width / 4.2,
-    width: 150,
-  },
-  paymentMethodChevronIcon: {
-    marginTop: 25,
-    marginLeft: Dimensions.get("window").width / 4.2,
-    width: 150,
+    marginLeft: "auto",
+    marginRight: 15,
   },
   fallBackTextContainer: {
     justifyContent: "center",
