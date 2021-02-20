@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, ScrollView, Text, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  StyleSheet,
+  Dimensions,
+  KeyboardAvoidingView,
+} from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -81,100 +88,102 @@ const UserInfoScreen = ({ navigation }) => {
     navigation.goBack();
   };
   return (
-    <ScrollView>
-      <Text style={styles.title}>Please fill in the fields below.</Text>
-      <View style={styles.nameIconContainer}>
-        <FontAwesome5
-          style={styles.nameIcon}
-          name="user-alt"
-          size={30}
-          color={COLORS.primary}
-        />
-      </View>
+    <KeyboardAvoidingView keyboardVerticalOffset={30} behavior="padding">
+      <ScrollView>
+        <Text style={styles.title}>Please fill in the fields below.</Text>
+        <View style={styles.nameIconContainer}>
+          <FontAwesome5
+            style={styles.nameIcon}
+            name="user-alt"
+            size={30}
+            color={COLORS.primary}
+          />
+        </View>
 
-      <View style={styles.nameContainer}>
+        <View style={styles.nameContainer}>
+          <View>
+            <TextInput
+              mode="outlined"
+              style={styles.namesInput}
+              label="First Name"
+              error={formSubmitted && (!firstName || firstNameError)}
+              value={firstName}
+              onChangeText={(text) => setFirstName(text)}
+            />
+            {firstNameError ? (
+              <Text style={styles.firstNameError}>{firstNameError}</Text>
+            ) : null}
+          </View>
+
+          <View>
+            <TextInput
+              mode="outlined"
+              style={styles.namesInput}
+              error={formSubmitted && (!lastName || lastNameError)}
+              label="Last Name"
+              value={lastName}
+              onChangeText={(text) => setLastName(text)}
+            />
+            {lastNameError ? (
+              <Text style={styles.lastNameError}>{lastNameError}</Text>
+            ) : null}
+          </View>
+        </View>
+
+        <View style={styles.inputIconContainer}>
+          <Entypo
+            style={styles.nameIcon}
+            name="email"
+            size={30}
+            color={COLORS.primary}
+          />
+        </View>
         <View>
           <TextInput
             mode="outlined"
-            style={styles.namesInput}
-            label="First Name"
-            error={formSubmitted && (!firstName || firstNameError)}
-            value={firstName}
-            onChangeText={(text) => setFirstName(text)}
+            style={styles.input}
+            label="E-mail"
+            value={email}
+            error={formSubmitted && (!email || emailError)}
+            autoCapitalize="none"
+            onChangeText={(text) => setEmail(text)}
           />
-          {firstNameError ? (
-            <Text style={styles.firstNameError}>{firstNameError}</Text>
+          {emailError ? (
+            <Text style={styles.emailAddressError}>{emailError}</Text>
           ) : null}
         </View>
 
-        <View>
+        <View style={styles.inputIconContainer}>
+          <Entypo
+            style={styles.nameIcon}
+            name="phone"
+            size={30}
+            color={COLORS.primary}
+          />
+        </View>
+        <View style={styles.nameContainer}>
           <TextInput
             mode="outlined"
-            style={styles.namesInput}
-            error={formSubmitted && (!lastName || lastNameError)}
-            label="Last Name"
-            value={lastName}
-            onChangeText={(text) => setLastName(text)}
+            style={styles.input}
+            label="Phone"
+            keyboardType="number-pad"
+            error={formSubmitted && !phone}
+            value={phone}
+            onChangeText={(text) => setPhone(text.replace(/[^+0-9]/g, ""))}
           />
-          {lastNameError ? (
-            <Text style={styles.lastNameError}>{lastNameError}</Text>
-          ) : null}
         </View>
-      </View>
 
-      <View style={styles.inputIconContainer}>
-        <Entypo
-          style={styles.nameIcon}
-          name="email"
-          size={30}
-          color={COLORS.primary}
-        />
-      </View>
-      <View>
-        <TextInput
-          mode="outlined"
-          style={styles.input}
-          label="E-mail"
-          value={email}
-          error={formSubmitted && (!email || emailError)}
-          autoCapitalize="none"
-          onChangeText={(text) => setEmail(text)}
-        />
-        {emailError ? (
-          <Text style={styles.emailAddressError}>{emailError}</Text>
-        ) : null}
-      </View>
+        {error ? <Text style={styles.errorMessageText}>{error}</Text> : null}
 
-      <View style={styles.inputIconContainer}>
-        <Entypo
-          style={styles.nameIcon}
-          name="phone"
-          size={30}
-          color={COLORS.primary}
-        />
-      </View>
-      <View style={styles.nameContainer}>
-        <TextInput
-          mode="outlined"
-          style={styles.input}
-          label="Phone"
-          keyboardType="number-pad"
-          error={formSubmitted && !phone}
-          value={phone}
-          onChangeText={(text) => setPhone(text.replace(/[^+0-9]/g, ""))}
-        />
-      </View>
-
-      {error ? <Text style={styles.errorMessageText}>{error}</Text> : null}
-
-      <Button
-        mode="contained"
-        style={styles.submitButton}
-        onPress={() => onSubmit()}
-      >
-        <Text style={{ color: "#fff" }}>Save</Text>
-      </Button>
-    </ScrollView>
+        <Button
+          mode="contained"
+          style={styles.submitButton}
+          onPress={() => onSubmit()}
+        >
+          <Text style={{ color: "#fff" }}>Save</Text>
+        </Button>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -194,6 +203,9 @@ UserInfoScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   title: {
     textAlign: "center",
     fontSize: 20,

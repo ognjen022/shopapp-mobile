@@ -1,6 +1,6 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { Avatar, Button, Card } from "react-native-paper";
+import { View, Text, StyleSheet } from "react-native";
+import { Avatar, Button, Card, Paragraph, Badge } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -11,16 +11,38 @@ const LeftContent = (props) => (
   <Avatar.Icon {...props} icon="electron-framework" />
 );
 
+const RightContent = (product) => (
+  <Card.Content>
+    <Badge
+      visible={product.discount > 0}
+      size={35}
+      style={{ top: -10, right: -25, backgroundColor: "red" }}
+    >
+      <Text style={styles.discountAmount}>-{product.discount}%</Text>
+    </Badge>
+    <Paragraph style={styles.priceParagraph}>
+      $
+      {product.discount > 0
+        ? (product.price * (1 - product.discount * 0.01)).toFixed(2)
+        : product.price}
+    </Paragraph>
+  </Card.Content>
+);
+
 const Product = ({ product, navigation }) => {
   const dispatch = useDispatch();
 
   return (
     <Card style={styles.cardContainer} elevation={3}>
-      <Card.Title
-        title={product.title}
-        subtitle={product.subtitle}
-        left={LeftContent}
-      />
+      <View style={{}}>
+        <Card.Title
+          title={product.title}
+          subtitle={product.subtitle}
+          left={LeftContent}
+          right={() => RightContent(product)}
+        />
+      </View>
+
       <Card.Cover source={{ uri: product.images[0] }} />
       <Card.Actions align="right" style={styles.cardActions}>
         <Button
@@ -46,6 +68,15 @@ const styles = StyleSheet.create({
   cardActions: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  priceParagraph: {
+    fontSize: 18,
+    color: "gray",
+    right: -10,
+  },
+  discountAmount: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 

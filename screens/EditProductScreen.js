@@ -24,6 +24,7 @@ const EditProductScreen = ({ navigation }) => {
           subtitle: "",
           category: "",
           price: "",
+          discount: "",
           description: "",
           images: [],
         };
@@ -106,6 +107,18 @@ const EditProductScreen = ({ navigation }) => {
           setProductValues({
             ...productValues,
             price: !isNaN(text) ? parseInt(text) : "",
+          })
+        }
+      />
+
+      <Text style={styles.label}>Discount (in %)</Text>
+      <TextInput
+        style={styles.input}
+        value={productValues.discount.toString()}
+        onChangeText={(text) =>
+          setProductValues({
+            ...productValues,
+            discount: !isNaN(text) ? parseInt(text) : "",
           })
         }
       />

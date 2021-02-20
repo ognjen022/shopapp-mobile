@@ -19,6 +19,7 @@ const CartScreen = ({ navigation }) => {
   const cartProducts = useSelector((state) => state.cart);
   const addressInfo = useSelector((state) => state.address);
   const userInfo = useSelector((state) => state.user);
+  const SHIPPING_COST = 10;
 
   if (cartProducts.length === 0)
     return (
@@ -29,7 +30,14 @@ const CartScreen = ({ navigation }) => {
 
   const getTotalPrice = (items) => {
     let total = 0;
-    items.forEach((item) => (total = total + item.price * item.amount));
+    items.forEach((item) => {
+      if (item.discount === 0)
+        return (total = total + item.price * item.amount);
+      else {
+        return (total =
+          total + item.price * (1 - item.discount * 0.01) * item.amount);
+      }
+    });
     return total.toFixed(2);
   };
 
@@ -54,7 +62,7 @@ const CartScreen = ({ navigation }) => {
         <View style={styles.deliveryLocationIcon}>
           <Entypo name="user" size={24} color={COLORS.primary} />
         </View>
-        <View style={{ marginTop: 25, marginLeft: 10, width: 150 }}>
+        <View style={{ marginTop: 25, marginLeft: 10, width: 160 }}>
           {userInfo.firstName &&
           userInfo.lastName &&
           userInfo.phone &&
@@ -92,7 +100,7 @@ const CartScreen = ({ navigation }) => {
         <View style={styles.deliveryLocationIcon}>
           <Entypo name="location" size={24} color={COLORS.primary} />
         </View>
-        <View style={{ marginTop: 25, marginLeft: 10, width: 150 }}>
+        <View style={{ marginTop: 25, marginLeft: 10, width: 200 }}>
           {addressInfo.addressNumber &&
           addressInfo.street &&
           addressInfo.apartmentNumber &&
@@ -152,9 +160,7 @@ const CartScreen = ({ navigation }) => {
         <Text style={{ marginLeft: 20, fontWeight: "300", color: "gray" }}>
           Subtotal
         </Text>
-        <Text style={{ marginRight: 20 }}>
-          ${(getTotalPrice(cartProducts) - 10).toFixed(2)}
-        </Text>
+        <Text style={{ marginRight: 20 }}>${getTotalPrice(cartProducts)}</Text>
       </View>
       <View
         style={{
@@ -179,7 +185,7 @@ const CartScreen = ({ navigation }) => {
           Total
         </Text>
         <Text style={{ marginRight: 20, fontSize: 22, fontWeight: "bold" }}>
-          ${getTotalPrice(cartProducts)}
+          ${parseFloat(getTotalPrice(cartProducts)) + SHIPPING_COST}
         </Text>
       </View>
       <View style={styles.totalContainer}>
@@ -261,6 +267,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     paddingHorizontal: 30,
     paddingVertical: 10,
+    backgroundColor: "white",
   },
 });
 

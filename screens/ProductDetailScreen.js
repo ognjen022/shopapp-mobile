@@ -58,30 +58,31 @@ const ProductDetailScreen = ({ navigation }) => {
 
         <Text style={styles.productDescription}>{product.description}</Text>
 
-        <Text style={styles.productPrice}>${product.price.toFixed(2)}</Text>
-        <Text
-          style={{
-            color: "gray",
-            marginTop: 5,
-            textAlign: "center",
-          }}
-        >
-          Tax Rate 2% - ${product.price * 0.98} (~$
-          {(product.price * 0.98).toFixed(2)})
+        <Text style={styles.productPrice}>
+          $
+          {product.discount > 0
+            ? (product.price * (1 - product.discount * 0.01)).toFixed(2)
+            : (product.price * 0.98).toFixed(2)}
         </Text>
+        {product.discount ? (
+          <Text
+            style={{
+              color: "gray",
+              marginTop: 5,
+              textAlign: "center",
+            }}
+          >
+            Discount {product.discount}%, Original Price - $
+            {product.price.toFixed(2)}
+          </Text>
+        ) : null}
 
         <Button
           icon="cart-arrow-right"
           mode="outlined"
           onPress={() => dispatch(addToCart(product))}
           color={COLORS.accent}
-          style={{
-            borderColor: COLORS.accent,
-            marginVertical: 20,
-            width: 200,
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
+          style={styles.addToCartButton}
         >
           Add to cart
         </Button>
@@ -156,6 +157,15 @@ const styles = StyleSheet.create({
   infoContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  addToCartButton: {
+    borderColor: COLORS.accent,
+    marginVertical: 20,
+    width: 200,
+    borderWidth: 1,
+    backgroundColor: "white",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
 });
 
