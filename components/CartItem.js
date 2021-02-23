@@ -49,7 +49,10 @@ const CartItem = ({ item }) => {
               name="minuscircleo"
               size={30}
               color={item.amount === 1 ? "lightgray" : "gray"}
-              onPress={() => dispatch(changeAmount(-1, item.id))}
+              onPress={() => {
+                if (item.amount === 1) return;
+                dispatch(changeAmount(-1, item.id));
+              }}
             />
             <Text style={styles.itemAmount}>{item.amount}</Text>
             <AntDesign

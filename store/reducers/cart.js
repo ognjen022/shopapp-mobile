@@ -9,26 +9,22 @@ export default function cartReducer(state = initialState, action) {
         (item) => item.id === action.payload.id
       );
       if (alreadyInCart != -1) {
-        const newState = state;
-        newState[alreadyInCart] = {
-          ...newState[alreadyInCart],
-          amount: newState[alreadyInCart].amount + 1,
-        };
-        return newState;
+        return state.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, amount: item.amount + 1 }
+            : item
+        );
       } else {
         return [...state, { ...action.payload, amount: 1 }];
       }
     case REMOVE_FROM_CART:
       return state.filter((item) => item.id !== action.payload);
     case CHANGE_AMOUNT:
-      const itemToChange = state.find((item) => item.id === action.payload.id);
-      if (itemToChange.amount === 1 && action.payload.amount === -1)
-        return state;
-      const index = state.findIndex((item) => item.id === action.payload.id);
-      itemToChange.amount = itemToChange.amount + action.payload.amount;
-      const newState = [...state];
-      newState[index] = itemToChange;
-      return newState;
+      return state.map((item) =>
+        item.id === action.payload.id
+          ? { ...item, amount: item.amount + action.payload.amount }
+          : item
+      );
     default:
       return state;
   }

@@ -13,10 +13,20 @@ const LeftContent = (props) => (
 
 const RightContent = (product) => (
   <Card.Content>
+    <Text
+      style={{
+        top: 8,
+        right: 20,
+        color: "gray",
+        textDecorationLine: "line-through",
+      }}
+    >
+      ${product.price}
+    </Text>
     <Badge
       visible={product.discount > 0}
       size={35}
-      style={{ top: -10, right: -25, backgroundColor: "red" }}
+      style={{ top: -20, right: -25, backgroundColor: "red" }}
     >
       <Text style={styles.discountAmount}>-{product.discount}%</Text>
     </Badge>
@@ -73,6 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "gray",
     right: -10,
+    fontWeight: "bold",
   },
   discountAmount: {
     fontSize: 18,

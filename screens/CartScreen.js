@@ -5,7 +5,6 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Dimensions,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Button } from "react-native-paper";
@@ -41,11 +40,23 @@ const CartScreen = ({ navigation }) => {
     return total.toFixed(2);
   };
 
+  const getTotalLength = () => {
+    let length = 0;
+    cartProducts.forEach((item) => {
+      length = length + 1;
+      if (item.amount > 1) {
+        length = length - 1;
+        length = length + item.amount;
+      }
+    });
+    return length;
+  };
+
   return (
     <ScrollView>
       <Text style={styles.cartTitle}>
-        {cartProducts.length} {cartProducts.length === 1 ? "item" : "items"} in
-        the cart.
+        {getTotalLength()} {getTotalLength() === 1 ? "item" : "items"} in the
+        cart.
       </Text>
       <FlatList
         horizontal
@@ -215,6 +226,7 @@ CartScreen.navigationOptions = {
       Cart
     </Text>
   ),
+  headerBackTitle: () => "Back",
 };
 
 const styles = StyleSheet.create({

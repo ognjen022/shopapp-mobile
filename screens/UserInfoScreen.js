@@ -88,7 +88,7 @@ const UserInfoScreen = ({ navigation }) => {
     navigation.goBack();
   };
   return (
-    <KeyboardAvoidingView keyboardVerticalOffset={30} behavior="padding">
+    <KeyboardAvoidingView keyboardVerticalOffset={0} behavior="height">
       <ScrollView>
         <Text style={styles.title}>Please fill in the fields below.</Text>
         <View style={styles.nameIconContainer}>

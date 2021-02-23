@@ -1,12 +1,37 @@
-import React from "react";
-import { View, StyleSheet, FlatList, Platform, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, FlatList, Text } from "react-native";
+import { Badge } from "react-native-paper";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 
-import COLORS from "../consts/colors";
 import { HeaderButton, Product } from "../components";
 import { PRODUCTS } from "../data/products";
+import COLORS from "../consts/colors";
 
 const ShopScreen = ({ navigation }) => {
+  const cartItems = useSelector((state) => state.cart);
+  const [length, setLength] = useState(0);
+
+  const handleUpdateTotalLength = () => {
+    let length = 0;
+    cartItems.forEach((item) => {
+      length = length + 1;
+      if (item.amount > 1) {
+        length = length - 1;
+        length = length + item.amount;
+      }
+    });
+    setLength(length);
+  };
+
+  useEffect(() => {
+    handleUpdateTotalLength();
+  }, [cartItems, handleUpdateTotalLength]);
+
+  useEffect(() => {
+    navigation.setParams({ length });
+  }, [length]);
+
   return (
     <View>
       <FlatList
@@ -21,6 +46,8 @@ const ShopScreen = ({ navigation }) => {
 };
 
 ShopScreen.navigationOptions = (navData) => {
+  const cartTotalLength = navData.navigation.getParam("length") || 0;
+
   return {
     headerTitle: () => (
       <Text
@@ -47,15 +74,33 @@ ShopScreen.navigationOptions = (navData) => {
       </HeaderButtons>
     ),
     headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Cart"
-          iconName={Platform.OS === "ios" ? "md-cart" : "shopping-cart"}
-          onPress={() => {
-            navData.navigation.navigate("Cart");
+      <>
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Cart"
+            iconName={"md-cart"}
+            onPress={() => {
+              navData.navigation.navigate("Cart");
+            }}
+          />
+        </HeaderButtons>
+        <Badge
+          visible={cartTotalLength > 0}
+          size={19}
+          style={{
+            backgroundColor: "red",
+            top: 6,
+            right: 3,
+            position: "absolute",
           }}
-        />
-      </HeaderButtons>
+        >
+          {cartTotalLength > 0 ? (
+            <Text style={{ fontWeight: "bold", fontSize: 15 }}>
+              {cartTotalLength}
+            </Text>
+          ) : null}
+        </Badge>
+      </>
     ),
   };
 };

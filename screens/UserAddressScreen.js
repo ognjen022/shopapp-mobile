@@ -93,7 +93,7 @@ const UserAddressScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView keyboardVerticalOffset={40} behavior="padding">
+    <KeyboardAvoidingView keyboardVerticalOffset={40} behavior="height">
       <ScrollView>
         {location ? (
           <MapView

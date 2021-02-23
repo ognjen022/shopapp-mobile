@@ -1,11 +1,18 @@
-import React from "react";
-import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
-import { Button } from "react-native-paper";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { Button, Badge } from "react-native-paper";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SliderBox } from "react-native-image-slider-box";
 import { FontAwesome } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import { HeaderButton } from "../components";
 import { addToCart } from "../store/actions/cartActions";
@@ -13,8 +20,29 @@ import COLORS from "../consts/colors";
 
 const ProductDetailScreen = ({ navigation }) => {
   const product = navigation.getParam("product");
-
+  const cartItems = useSelector((state) => state.cart);
+  const [length, setLength] = useState(0);
   const dispatch = useDispatch();
+
+  const handleUpdateTotalLength = () => {
+    let length = 0;
+    cartItems.forEach((item) => {
+      length = length + 1;
+      if (item.amount > 1) {
+        length = length - 1;
+        length = length + item.amount;
+      }
+    });
+    setLength(length);
+  };
+
+  useEffect(() => {
+    handleUpdateTotalLength();
+  }, [cartItems, handleUpdateTotalLength]);
+
+  useEffect(() => {
+    navigation.setParams({ length });
+  }, [length]);
 
   return (
     <ScrollView>
@@ -27,34 +55,30 @@ const ProductDetailScreen = ({ navigation }) => {
         <View
           style={{
             flexDirection: "row",
-            padding: 10,
-            alignSelf: "flex-start",
-            marginLeft: 20,
+            justifyContent: "space-between",
           }}
         >
-          <FontAwesome name="shopping-cart" size={24} color={COLORS.primary} />
-          <Text
-            style={{
-              color: COLORS.primary,
-              marginLeft: 10,
-              textAlign: "left",
-              marginTop: 5,
-            }}
-          >
-            Shopping
-          </Text>
+          <View style={styles.shoppingIconContainer}>
+            <FontAwesome
+              name="shopping-cart"
+              size={24}
+              color={COLORS.primary}
+            />
+            <Text style={styles.shoppingIcon}>Shopping</Text>
+          </View>
+          <TouchableOpacity>
+            <Ionicons
+              name="md-heart"
+              size={32}
+              color={COLORS.primary}
+              style={{ marginTop: 8, marginRight: 20 }}
+            />
+          </TouchableOpacity>
         </View>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={styles.productTitle}>
-            {product.title} - {product.subtitle}
-          </Text>
-          <EvilIcons
-            name="share-google"
-            size={32}
-            color={COLORS.primary}
-            style={{ marginTop: 8, marginRight: 30 }}
-          />
-        </View>
+
+        <Text style={styles.productTitle}>
+          {product.title} - {product.subtitle}
+        </Text>
 
         <Text style={styles.productDescription}>{product.description}</Text>
 
@@ -92,7 +116,9 @@ const ProductDetailScreen = ({ navigation }) => {
 };
 
 ProductDetailScreen.navigationOptions = (navData) => {
+  const cartTotalLength = navData.navigation.getParam("length") || 0;
   const product = navData.navigation.getParam("product");
+
   return {
     headerTitle: () => (
       <Text
@@ -108,15 +134,33 @@ ProductDetailScreen.navigationOptions = (navData) => {
     ),
     headerTitleStyle: { color: COLORS.primary, fontWeight: "bold" },
     headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Cart"
-          iconName="md-heart"
-          onPress={() => {
-            navData.navigation.navigate("Cart");
+      <>
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Cart"
+            iconName={"md-cart"}
+            onPress={() => {
+              navData.navigation.navigate("Cart");
+            }}
+          />
+        </HeaderButtons>
+        <Badge
+          visible={cartTotalLength > 0}
+          size={19}
+          style={{
+            backgroundColor: "red",
+            top: 6,
+            right: 3,
+            position: "absolute",
           }}
-        />
-      </HeaderButtons>
+        >
+          {cartTotalLength > 0 ? (
+            <Text style={{ fontWeight: "bold", fontSize: 15 }}>
+              {cartTotalLength}
+            </Text>
+          ) : null}
+        </Badge>
+      </>
     ),
   };
 };
@@ -135,22 +179,18 @@ const styles = StyleSheet.create({
   productTitle: {
     fontSize: 29,
     fontWeight: "bold",
-    justifyContent: "space-between",
     textAlign: "center",
-    marginLeft: 30,
-    width: 350,
   },
   productPrice: {
     fontWeight: "bold",
     fontSize: 22,
     textAlign: "center",
-    marginTop: 10,
   },
   productDescription: {
     padding: 15,
-    margin: 20,
+    marginHorizontal: 20,
     width: Dimensions.get("window").width * 0.9,
-    textAlign: "left",
+    textAlign: "center",
     fontSize: 16,
     color: "gray",
   },
@@ -166,6 +206,19 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginLeft: "auto",
     marginRight: "auto",
+  },
+  shoppingIconContainer: {
+    flexDirection: "row",
+    padding: 10,
+    alignSelf: "flex-start",
+    marginLeft: 20,
+    marginBottom: 10,
+  },
+  shoppingIcon: {
+    color: COLORS.primary,
+    marginLeft: 10,
+    textAlign: "left",
+    marginTop: 5,
   },
 });
 
