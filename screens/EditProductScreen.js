@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  TextInput,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-} from "react-native";
+import { Text, TextInput, StyleSheet, Dimensions, ScrollView } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { SliderBox } from "react-native-image-slider-box";
 import { Button } from "react-native-paper";
@@ -15,7 +9,7 @@ import COLORS from "../consts/colors";
 const EditProductScreen = ({ navigation }) => {
   const mode = navigation.getParam("mode");
   const id = navigation.getParam("id");
-  const product = PRODUCTS.find((product) => product.id === id);
+  const product = PRODUCTS.find(product => product.id === id);
   const initialState =
     product && Object.keys(product).length > 0
       ? { ...product }
@@ -34,9 +28,7 @@ const EditProductScreen = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
@@ -70,7 +62,7 @@ const EditProductScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         value={productValues.title}
-        onChangeText={(text) =>
+        onChangeText={text =>
           setProductValues({
             ...productValues,
             title: text,
@@ -81,7 +73,7 @@ const EditProductScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         value={productValues.subtitle}
-        onChangeText={(text) =>
+        onChangeText={text =>
           setProductValues({
             ...productValues,
             subtitle: text,
@@ -92,7 +84,7 @@ const EditProductScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         value={productValues.category}
-        onChangeText={(text) =>
+        onChangeText={text =>
           setProductValues({
             ...productValues,
             category: text,
@@ -103,7 +95,7 @@ const EditProductScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         value={productValues.price.toString()}
-        onChangeText={(text) =>
+        onChangeText={text =>
           setProductValues({
             ...productValues,
             price: !isNaN(text) ? parseInt(text) : "",
@@ -115,7 +107,7 @@ const EditProductScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         value={productValues.discount.toString()}
-        onChangeText={(text) =>
+        onChangeText={text =>
           setProductValues({
             ...productValues,
             discount: !isNaN(text) ? parseInt(text) : "",
@@ -129,7 +121,7 @@ const EditProductScreen = ({ navigation }) => {
         numberOfLines={5}
         style={styles.input}
         value={productValues.description}
-        onChangeText={(text) =>
+        onChangeText={text =>
           setProductValues({
             ...productValues,
             description: text,
@@ -137,30 +129,20 @@ const EditProductScreen = ({ navigation }) => {
         }
       />
       <Text style={styles.label}>Images</Text>
-      {productValues.images.length > 0 ? (
-        <SliderBox
-          sliderBoxHeight={250}
-          images={productValues?.images}
-          dotColor={COLORS.primary}
-        />
-      ) : null}
+      {productValues.images.length > 0 ? <SliderBox sliderBoxHeight={250} images={productValues?.images} dotColor={COLORS.primary} /> : null}
 
       <Button style={styles.imageButton} onPress={pickImage}>
         <Text style={{ color: "#fff" }}>Choose an image</Text>
       </Button>
 
-      <Button
-        mode="contained"
-        style={styles.submitButton}
-        onPress={() => onSubmit()}
-      >
+      <Button mode="contained" style={styles.submitButton} onPress={() => onSubmit()}>
         <Text style={{ color: "#fff" }}>Save</Text>
       </Button>
     </ScrollView>
   );
 };
 
-EditProductScreen.navigationOptions = (navData) => {
+EditProductScreen.navigationOptions = navData => {
   const mode = navData.navigation.getParam("mode");
   return {
     headerTitle: () =>

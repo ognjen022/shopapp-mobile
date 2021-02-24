@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Dimensions,
-  ScrollView,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, StyleSheet, Text, Dimensions, ScrollView, KeyboardAvoidingView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { TextInput, Button } from "react-native-paper";
 import MapView, { Marker } from "react-native-maps";
@@ -23,7 +16,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const UserAddressScreen = ({ navigation }) => {
-  const addressInfo = useSelector((state) => state.address);
+  const addressInfo = useSelector(state => state.address);
 
   const [country, setCountry] = useState(addressInfo.country);
   const [city, setCity] = useState(addressInfo.city);
@@ -42,9 +35,7 @@ const UserAddressScreen = ({ navigation }) => {
     (async () => {
       try {
         if (country && street && city) {
-          const locationDecoded = await Location.geocodeAsync(
-            `${street} ${city} ${country}`
-          );
+          const locationDecoded = await Location.geocodeAsync(`${street} ${city} ${country}`);
           setLocation(locationDecoded[0]);
           setLoading(false);
           return;
@@ -56,9 +47,7 @@ const UserAddressScreen = ({ navigation }) => {
         }
 
         let location = await Location.getCurrentPositionAsync({});
-        const locationDecoded = await Location.reverseGeocodeAsync(
-          location.coords
-        );
+        const locationDecoded = await Location.reverseGeocodeAsync(location.coords);
         setCountry(locationDecoded[0]?.country);
         setCity(locationDecoded[0]?.city);
         setZip(locationDecoded[0]?.postalCode);
@@ -109,44 +98,12 @@ const UserAddressScreen = ({ navigation }) => {
         ) : (
           <MapView style={styles.map}></MapView>
         )}
-        <Spinner
-          visible={loading}
-          textContent={"Loading your location..."}
-          textStyle={styles.spinnerTextStyle}
-        />
+        <Spinner visible={loading} textContent={"Loading your location..."} textStyle={styles.spinnerTextStyle} />
         <View style={{ marginTop: 50, alignItems: "center" }}>
-          <TextInput
-            style={{ width: 300 }}
-            error={!country && formSubmitted}
-            mode="outlined"
-            label="Country"
-            value={country}
-            onChangeText={(text) => setCountry(text)}
-          />
-          <TextInput
-            style={{ width: 300 }}
-            error={!city && formSubmitted}
-            mode="outlined"
-            label="City"
-            value={city}
-            onChangeText={(text) => setCity(text)}
-          />
-          <TextInput
-            style={{ width: 300 }}
-            error={!zip && formSubmitted}
-            mode="outlined"
-            label="Zip/Postal Code"
-            value={zip}
-            onChangeText={(text) => setZip(text)}
-          />
-          <TextInput
-            style={{ width: 300 }}
-            error={!street && formSubmitted}
-            mode="outlined"
-            label="Street"
-            value={street}
-            onChangeText={(text) => setStreet(text)}
-          />
+          <TextInput style={styles.wideInput} error={!country && formSubmitted} mode="outlined" label="Country" value={country} onChangeText={text => setCountry(text)} />
+          <TextInput style={styles.wideInput} error={!city && formSubmitted} mode="outlined" label="City" value={city} onChangeText={text => setCity(text)} />
+          <TextInput style={styles.wideInput} error={!zip && formSubmitted} mode="outlined" label="Zip/Postal Code" value={zip} onChangeText={text => setZip(text)} />
+          <TextInput style={styles.wideInput} error={!street && formSubmitted} mode="outlined" label="Street" value={street} onChangeText={text => setStreet(text)} />
           <View style={{ flexDirection: "row", padding: 10 }}>
             <TextInput
               style={{ width: 145, marginRight: 5 }}
@@ -154,7 +111,7 @@ const UserAddressScreen = ({ navigation }) => {
               error={!addressNumber && formSubmitted}
               label="Address number"
               value={addressNumber}
-              onChangeText={(text) => setAddressNumber(text)}
+              onChangeText={text => setAddressNumber(text)}
             />
             <TextInput
               style={{ width: 145, marginLeft: 5 }}
@@ -162,19 +119,12 @@ const UserAddressScreen = ({ navigation }) => {
               error={!apartment && formSubmitted}
               label="Apartment number"
               value={apartment}
-              onChangeText={(text) => setApartment(text)}
+              onChangeText={text => setApartment(text)}
             />
           </View>
 
-          {errorMessage ? (
-            <Text style={styles.errorMessageText}>{errorMessage}</Text>
-          ) : null}
-          <Button
-            onPress={handleForm}
-            mode="outlined"
-            color={COLORS.primary}
-            style={styles.confirmButton}
-          >
+          {errorMessage ? <Text style={styles.errorMessageText}>{errorMessage}</Text> : null}
+          <Button onPress={handleForm} mode="outlined" color={COLORS.primary} style={styles.confirmButton}>
             CONFIRM
           </Button>
         </View>
@@ -217,6 +167,7 @@ const styles = StyleSheet.create({
   map: {
     height: 300,
   },
+  wideInput: { width: 300 },
 });
 
 export default UserAddressScreen;

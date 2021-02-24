@@ -12,7 +12,7 @@ const OrdersScreen = () => {
   );
 };
 
-OrdersScreen.navigationOptions = (navData) => {
+OrdersScreen.navigationOptions = navData => {
   return {
     headerTitle: () => null,
     headerLeft: () => (

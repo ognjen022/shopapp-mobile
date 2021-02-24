@@ -17,9 +17,7 @@ export const PRODUCTS = [
   },
   {
     id: 2,
-    images: [
-      "https://img.gigatron.rs/img/products/large/image5aa78ebd5d6cb.png",
-    ],
+    images: ["https://img.gigatron.rs/img/products/large/image5aa78ebd5d6cb.png"],
     title: " AM116",
     subtitle: "Huawei",
     category: "Electronics",
@@ -31,9 +29,7 @@ export const PRODUCTS = [
   },
   {
     id: 3,
-    images: [
-      "https://img.gigatron.rs/img/products/large/image5b6d48a962229.png",
-    ],
+    images: ["https://img.gigatron.rs/img/products/large/image5b6d48a962229.png"],
     title: " 21671",
     subtitle: "STARZS",
     category: "Electronics",
@@ -45,9 +41,7 @@ export const PRODUCTS = [
   },
   {
     id: 4,
-    images: [
-      "https://img.gigatron.rs/img/products/large/image5be2d19adf933.png",
-    ],
+    images: ["https://img.gigatron.rs/img/products/large/image5be2d19adf933.png"],
     title: " Seiren Elite RZ19",
     subtitle: "RAZER",
     category: "Electronics",

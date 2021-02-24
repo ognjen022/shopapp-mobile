@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Button } from "react-native-paper";
 import { useSelector } from "react-redux";
@@ -15,9 +9,9 @@ import { CartItem } from "../components";
 import COLORS from "../consts/colors";
 
 const CartScreen = ({ navigation }) => {
-  const cartProducts = useSelector((state) => state.cart);
-  const addressInfo = useSelector((state) => state.address);
-  const userInfo = useSelector((state) => state.user);
+  const cartProducts = useSelector(state => state.cart);
+  const addressInfo = useSelector(state => state.address);
+  const userInfo = useSelector(state => state.user);
   const SHIPPING_COST = 10;
 
   if (cartProducts.length === 0)
@@ -27,14 +21,12 @@ const CartScreen = ({ navigation }) => {
       </View>
     );
 
-  const getTotalPrice = (items) => {
+  const getTotalPrice = items => {
     let total = 0;
-    items.forEach((item) => {
-      if (item.discount === 0)
-        return (total = total + item.price * item.amount);
+    items.forEach(item => {
+      if (item.discount === 0) return (total = total + item.price * item.amount);
       else {
-        return (total =
-          total + item.price * (1 - item.discount * 0.01) * item.amount);
+        return (total = total + item.price * (1 - item.discount * 0.01) * item.amount);
       }
     });
     return total.toFixed(2);
@@ -42,7 +34,7 @@ const CartScreen = ({ navigation }) => {
 
   const getTotalLength = () => {
     let length = 0;
-    cartProducts.forEach((item) => {
+    cartProducts.forEach(item => {
       length = length + 1;
       if (item.amount > 1) {
         length = length - 1;
@@ -55,47 +47,27 @@ const CartScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <Text style={styles.cartTitle}>
-        {getTotalLength()} {getTotalLength() === 1 ? "item" : "items"} in the
-        cart.
+        {getTotalLength()} {getTotalLength() === 1 ? "item" : "items"} in the cart.
       </Text>
-      <FlatList
-        horizontal
-        keyExtractor={(item) => item.id.toString()}
-        data={cartProducts}
-        renderItem={({ item }) => <CartItem item={item} />}
-      />
+      <FlatList horizontal keyExtractor={item => item.id.toString()} data={cartProducts} renderItem={({ item }) => <CartItem item={item} />} />
 
       <Text style={styles.subHeaderText}>Customer Info</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("UserInfo")}
-        style={{ flexDirection: "row" }}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate("UserInfo")} style={{ flexDirection: "row" }}>
         <View style={styles.deliveryLocationIcon}>
           <Entypo name="user" size={24} color={COLORS.primary} />
         </View>
         <View style={{ marginTop: 25, marginLeft: 10, width: 160 }}>
-          {userInfo.firstName &&
-          userInfo.lastName &&
-          userInfo.phone &&
-          userInfo.email ? (
+          {userInfo.firstName && userInfo.lastName && userInfo.phone && userInfo.email ? (
             <>
               <Text style={{ fontWeight: "bold" }}>
                 {userInfo?.firstName} {userInfo?.lastName}{" "}
               </Text>
 
-              <Text style={{ fontWeight: "300", color: "gray" }}>
-                {userInfo?.phone}
-              </Text>
-              <Text style={{ fontWeight: "300", color: "gray" }}>
-                {userInfo?.email.length > 12
-                  ? userInfo.email.substring(0, 14) + "..."
-                  : userInfo.email}
-              </Text>
+              <Text style={styles.subGrayText}>{userInfo?.phone}</Text>
+              <Text style={styles.subGrayText}>{userInfo?.email.length > 12 ? userInfo.email.substring(0, 14) + "..." : userInfo.email}</Text>
             </>
           ) : (
-            <Text style={{ fontWeight: "bold" }}>
-              Please fill in your info correctly.
-            </Text>
+            <Text style={{ fontWeight: "bold" }}>Please fill in your info correctly.</Text>
           )}
         </View>
         <View style={styles.chevronIcon}>
@@ -104,33 +76,22 @@ const CartScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <Text style={styles.subHeaderText}>Delivery Location</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("UserAddress")}
-        style={{ flexDirection: "row" }}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate("UserAddress")} style={{ flexDirection: "row" }}>
         <View style={styles.deliveryLocationIcon}>
           <Entypo name="location" size={24} color={COLORS.primary} />
         </View>
         <View style={{ marginTop: 25, marginLeft: 10, width: 200 }}>
-          {addressInfo.addressNumber &&
-          addressInfo.street &&
-          addressInfo.apartmentNumber &&
-          addressInfo.zip &&
-          addressInfo.city &&
-          addressInfo.country ? (
+          {addressInfo.addressNumber && addressInfo.street && addressInfo.apartmentNumber && addressInfo.zip && addressInfo.city && addressInfo.country ? (
             <>
               <Text style={{ fontWeight: "bold" }}>
-                {addressInfo?.addressNumber}/{addressInfo?.apartmentNumber}{" "}
-                {addressInfo?.street}
+                {addressInfo?.addressNumber}/{addressInfo?.apartmentNumber} {addressInfo?.street}
               </Text>
-              <Text style={{ fontWeight: "300", color: "gray" }}>
+              <Text style={styles.subGrayText}>
                 {addressInfo?.zip} {addressInfo?.city}, {addressInfo?.country}
               </Text>
             </>
           ) : (
-            <Text style={{ fontWeight: "bold" }}>
-              Please fill in all the address details correctly.
-            </Text>
+            <Text style={{ fontWeight: "bold" }}>Please fill in all the address details correctly.</Text>
           )}
         </View>
         <View style={styles.chevronIcon}>
@@ -139,10 +100,7 @@ const CartScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <Text style={styles.subHeaderText}>Payment Method</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("PaymentMethod")}
-        style={{ flexDirection: "row" }}
-      >
+      <TouchableOpacity onPress={() => navigation.navigate("PaymentMethod")} style={{ flexDirection: "row" }}>
         <View style={styles.deliveryLocationIcon}>
           <Entypo name="credit-card" size={24} color={COLORS.primary} />
         </View>
@@ -153,7 +111,7 @@ const CartScreen = ({ navigation }) => {
           }}
         >
           <Text style={{ fontWeight: "bold" }}>VISA Classic</Text>
-          <Text style={{ fontWeight: "300", color: "gray" }}>****-0921</Text>
+          <Text style={styles.subGrayText}>****-0921</Text>
         </View>
         <View style={styles.chevronIcon}>
           <Entypo name="chevron-right" size={32} color="black" />
@@ -161,51 +119,20 @@ const CartScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <Text style={styles.subHeaderText}>Order Info</Text>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginTop: 20,
-        }}
-      >
-        <Text style={{ marginLeft: 20, fontWeight: "300", color: "gray" }}>
-          Subtotal
-        </Text>
+      <View style={styles.checkoutRow}>
+        <Text style={styles.checkoutRowTitle}>Subtotal</Text>
         <Text style={{ marginRight: 20 }}>${getTotalPrice(cartProducts)}</Text>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginTop: 20,
-        }}
-      >
-        <Text style={{ marginLeft: 20, fontWeight: "300", color: "gray" }}>
-          Shipping Cost
-        </Text>
+      <View style={styles.checkoutRow}>
+        <Text style={styles.checkoutRowTitle}>Shipping Cost</Text>
         <Text style={{ marginRight: 20 }}>+$10.00</Text>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginTop: 20,
-        }}
-      >
-        <Text style={{ marginLeft: 20, fontWeight: "300", color: "gray" }}>
-          Total
-        </Text>
-        <Text style={{ marginRight: 20, fontSize: 22, fontWeight: "bold" }}>
-          ${parseFloat(getTotalPrice(cartProducts)) + SHIPPING_COST}
-        </Text>
+      <View style={styles.checkoutRow}>
+        <Text style={styles.checkoutRowTitle}>Total</Text>
+        <Text style={{ marginRight: 20, fontSize: 22, fontWeight: "bold" }}>${parseFloat(getTotalPrice(cartProducts)) + SHIPPING_COST}</Text>
       </View>
       <View style={styles.totalContainer}>
-        <Button
-          mode="outlined"
-          style={styles.checkoutButton}
-          color={COLORS.accent}
-          icon="sticker-check-outline"
-        >
+        <Button mode="outlined" style={styles.checkoutButton} color={COLORS.accent} icon="sticker-check-outline">
           <Text>Checkout</Text>
         </Button>
       </View>
@@ -242,6 +169,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 20,
   },
+  subGrayText: { fontWeight: "300", color: "gray" },
   deliveryLocationIcon: {
     marginLeft: 20,
     marginTop: 20,
@@ -281,6 +209,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: "white",
   },
+  checkoutRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  checkoutRowTitle: { marginLeft: 20, fontWeight: "300", color: "gray" },
 });
 
 export default CartScreen;

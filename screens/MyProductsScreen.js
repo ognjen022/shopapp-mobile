@@ -11,18 +11,12 @@ import COLORS from "../consts/colors";
 const MyProductsScreen = ({ navigation }) => {
   return (
     <View>
-      <FlatList
-        data={PRODUCTS}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <Product item={item} navigation={navigation} />
-        )}
-      />
+      <FlatList data={PRODUCTS} keyExtractor={item => item.id.toString()} renderItem={({ item }) => <Product item={item} navigation={navigation} />} />
     </View>
   );
 };
 
-MyProductsScreen.navigationOptions = (navData) => {
+MyProductsScreen.navigationOptions = navData => {
   return {
     headerTitle: () => (
       <Text

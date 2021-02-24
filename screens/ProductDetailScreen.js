@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import { Button, Badge } from "react-native-paper";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,13 +13,13 @@ import COLORS from "../consts/colors";
 
 const ProductDetailScreen = ({ navigation }) => {
   const product = navigation.getParam("product");
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector(state => state.cart);
   const [length, setLength] = useState(0);
   const dispatch = useDispatch();
 
   const handleUpdateTotalLength = () => {
     let length = 0;
-    cartItems.forEach((item) => {
+    cartItems.forEach(item => {
       length = length + 1;
       if (item.amount > 1) {
         length = length - 1;
@@ -47,11 +40,7 @@ const ProductDetailScreen = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.productContainer}>
-        <SliderBox
-          sliderBoxHeight={250}
-          images={product.images}
-          dotColor={COLORS.primary}
-        />
+        <SliderBox sliderBoxHeight={250} images={product.images} dotColor={COLORS.primary} />
         <View
           style={{
             flexDirection: "row",
@@ -59,20 +48,11 @@ const ProductDetailScreen = ({ navigation }) => {
           }}
         >
           <View style={styles.shoppingIconContainer}>
-            <FontAwesome
-              name="shopping-cart"
-              size={24}
-              color={COLORS.primary}
-            />
+            <FontAwesome name="shopping-cart" size={24} color={COLORS.primary} />
             <Text style={styles.shoppingIcon}>Shopping</Text>
           </View>
           <TouchableOpacity>
-            <Ionicons
-              name="md-heart"
-              size={32}
-              color={COLORS.primary}
-              style={{ marginTop: 8, marginRight: 20 }}
-            />
+            <Ionicons name="md-heart" size={32} color={COLORS.primary} style={styles.heartIcon} />
           </TouchableOpacity>
         </View>
 
@@ -82,32 +62,14 @@ const ProductDetailScreen = ({ navigation }) => {
 
         <Text style={styles.productDescription}>{product.description}</Text>
 
-        <Text style={styles.productPrice}>
-          $
-          {product.discount > 0
-            ? (product.price * (1 - product.discount * 0.01)).toFixed(2)
-            : (product.price * 0.98).toFixed(2)}
-        </Text>
+        <Text style={styles.productPrice}>${product.discount > 0 ? (product.price * (1 - product.discount * 0.01)).toFixed(2) : (product.price * 0.98).toFixed(2)}</Text>
         {product.discount ? (
-          <Text
-            style={{
-              color: "gray",
-              marginTop: 5,
-              textAlign: "center",
-            }}
-          >
-            Discount {product.discount}%, Original Price - $
-            {product.price.toFixed(2)}
+          <Text style={styles.discountText}>
+            Discount {product.discount}%, Original Price - ${product.price.toFixed(2)}
           </Text>
         ) : null}
 
-        <Button
-          icon="cart-arrow-right"
-          mode="outlined"
-          onPress={() => dispatch(addToCart(product))}
-          color={COLORS.accent}
-          style={styles.addToCartButton}
-        >
+        <Button icon="cart-arrow-right" mode="outlined" onPress={() => dispatch(addToCart(product))} color={COLORS.accent} style={styles.addToCartButton}>
           Add to cart
         </Button>
       </View>
@@ -115,7 +77,7 @@ const ProductDetailScreen = ({ navigation }) => {
   );
 };
 
-ProductDetailScreen.navigationOptions = (navData) => {
+ProductDetailScreen.navigationOptions = navData => {
   const cartTotalLength = navData.navigation.getParam("length") || 0;
   const product = navData.navigation.getParam("product");
 
@@ -154,11 +116,7 @@ ProductDetailScreen.navigationOptions = (navData) => {
             position: "absolute",
           }}
         >
-          {cartTotalLength > 0 ? (
-            <Text style={{ fontWeight: "bold", fontSize: 15 }}>
-              {cartTotalLength}
-            </Text>
-          ) : null}
+          {cartTotalLength > 0 ? <Text style={{ fontWeight: "bold", fontSize: 15 }}>{cartTotalLength}</Text> : null}
         </Badge>
       </>
     ),
@@ -220,6 +178,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginTop: 5,
   },
+  discountText: {
+    color: "gray",
+    marginTop: 5,
+    textAlign: "center",
+  },
+  heartIcon: { marginTop: 8, marginRight: 20 },
 });
 
 export default ProductDetailScreen;

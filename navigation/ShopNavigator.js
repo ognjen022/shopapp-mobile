@@ -51,7 +51,7 @@ const ProductsNavigator = createStackNavigator(
   { defaultNavigationOptions: defaultStackNavOptions }
 );
 
-const DrawerContent = (props) => (
+const DrawerContent = props => (
   <View>
     <View
       style={{
@@ -61,16 +61,8 @@ const DrawerContent = (props) => (
         justifyContent: "center",
       }}
     >
-      <Avatar.Icon
-        {...props}
-        icon="electron-framework"
-        backgroundColor={COLORS.primary}
-        size={100}
-        style={{ marginTop: 30 }}
-      />
-      <Text style={{ fontSize: 30, color: "white", fontWeight: "bold" }}>
-        Shop App
-      </Text>
+      <Avatar.Icon {...props} icon="electron-framework" backgroundColor={COLORS.primary} size={100} style={{ marginTop: 30 }} />
+      <Text style={{ fontSize: 30, color: "white", fontWeight: "bold" }}>Shop App</Text>
     </View>
     <DrawerItems {...props} />
   </View>

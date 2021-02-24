@@ -6,13 +6,7 @@ import { Foundation } from "@expo/vector-icons";
 
 import COLORS from "../consts/colors";
 
-const PaymentMethod = ({
-  selectedMethod,
-  iconName,
-  setSelectedMethod,
-  text,
-  num,
-}) => {
+const PaymentMethod = ({ selectedMethod, iconName, setSelectedMethod, text, num }) => {
   return (
     <TouchableOpacity
       style={{
@@ -24,28 +18,13 @@ const PaymentMethod = ({
     >
       <>
         {iconName === "dollar-bill" ? (
-          <Foundation
-            name={iconName}
-            size={50}
-            color={COLORS.primary}
-            style={styles.paymentIcon}
-          />
+          <Foundation name={iconName} size={50} color={COLORS.primary} style={styles.paymentIcon} />
         ) : (
-          <FontAwesome
-            name={iconName}
-            size={50}
-            color={COLORS.primary}
-            style={styles.paymentIcon}
-          />
+          <FontAwesome name={iconName} size={50} color={COLORS.primary} style={styles.paymentIcon} />
         )}
       </>
       <Text style={styles.paymentItemText}>{text}</Text>
-      <AntDesign
-        name="checkcircle"
-        size={24}
-        color={selectedMethod === num ? COLORS.accent : "white"}
-        style={styles.checkIcon}
-      />
+      <AntDesign name="checkcircle" size={24} color={selectedMethod === num ? COLORS.accent : "white"} style={styles.checkIcon} />
     </TouchableOpacity>
   );
 };

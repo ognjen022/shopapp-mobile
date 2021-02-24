@@ -9,12 +9,12 @@ import { PRODUCTS } from "../data/products";
 import COLORS from "../consts/colors";
 
 const ShopScreen = ({ navigation }) => {
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector(state => state.cart);
   const [length, setLength] = useState(0);
 
   const handleUpdateTotalLength = () => {
     let length = 0;
-    cartItems.forEach((item) => {
+    cartItems.forEach(item => {
       length = length + 1;
       if (item.amount > 1) {
         length = length - 1;
@@ -34,18 +34,12 @@ const ShopScreen = ({ navigation }) => {
 
   return (
     <View>
-      <FlatList
-        data={PRODUCTS}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <Product product={item} navigation={navigation} />
-        )}
-      />
+      <FlatList data={PRODUCTS} keyExtractor={item => item.id.toString()} renderItem={({ item }) => <Product product={item} navigation={navigation} />} />
     </View>
   );
 };
 
-ShopScreen.navigationOptions = (navData) => {
+ShopScreen.navigationOptions = navData => {
   const cartTotalLength = navData.navigation.getParam("length") || 0;
 
   return {
@@ -94,11 +88,7 @@ ShopScreen.navigationOptions = (navData) => {
             position: "absolute",
           }}
         >
-          {cartTotalLength > 0 ? (
-            <Text style={{ fontWeight: "bold", fontSize: 15 }}>
-              {cartTotalLength}
-            </Text>
-          ) : null}
+          {cartTotalLength > 0 ? <Text style={{ fontWeight: "bold", fontSize: 15 }}>{cartTotalLength}</Text> : null}
         </Badge>
       </>
     ),

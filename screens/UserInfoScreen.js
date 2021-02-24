@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  ScrollView,
-  Text,
-  StyleSheet,
-  Dimensions,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, ScrollView, Text, StyleSheet, Dimensions, KeyboardAvoidingView } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -16,7 +9,7 @@ import { setUser } from "../store/actions/userActions";
 import COLORS from "../consts/colors";
 
 const UserInfoScreen = ({ navigation }) => {
-  const userInfo = useSelector((state) => state.user);
+  const userInfo = useSelector(state => state.user);
 
   const [firstName, setFirstName] = useState(userInfo.firstName);
   const [lastName, setLastName] = useState(userInfo.lastName);
@@ -60,16 +53,7 @@ const UserInfoScreen = ({ navigation }) => {
 
     if (firstName && lastName && email && phone) setError("");
 
-    if (
-      !firstName.match(nameValidator) ||
-      !lastName.match(nameValidator) ||
-      !email.match(emailValidator) ||
-      !firstName ||
-      !lastName ||
-      !email ||
-      !phone
-    )
-      return;
+    if (!firstName.match(nameValidator) || !lastName.match(nameValidator) || !email.match(emailValidator) || !firstName || !lastName || !email || !phone) return;
 
     setFirstNameError("");
     setLastNameError("");
@@ -92,12 +76,7 @@ const UserInfoScreen = ({ navigation }) => {
       <ScrollView>
         <Text style={styles.title}>Please fill in the fields below.</Text>
         <View style={styles.nameIconContainer}>
-          <FontAwesome5
-            style={styles.nameIcon}
-            name="user-alt"
-            size={30}
-            color={COLORS.primary}
-          />
+          <FontAwesome5 style={styles.nameIcon} name="user-alt" size={30} color={COLORS.primary} />
         </View>
 
         <View style={styles.nameContainer}>
@@ -108,11 +87,9 @@ const UserInfoScreen = ({ navigation }) => {
               label="First Name"
               error={formSubmitted && (!firstName || firstNameError)}
               value={firstName}
-              onChangeText={(text) => setFirstName(text)}
+              onChangeText={text => setFirstName(text)}
             />
-            {firstNameError ? (
-              <Text style={styles.firstNameError}>{firstNameError}</Text>
-            ) : null}
+            {firstNameError ? <Text style={styles.firstNameError}>{firstNameError}</Text> : null}
           </View>
 
           <View>
@@ -122,21 +99,14 @@ const UserInfoScreen = ({ navigation }) => {
               error={formSubmitted && (!lastName || lastNameError)}
               label="Last Name"
               value={lastName}
-              onChangeText={(text) => setLastName(text)}
+              onChangeText={text => setLastName(text)}
             />
-            {lastNameError ? (
-              <Text style={styles.lastNameError}>{lastNameError}</Text>
-            ) : null}
+            {lastNameError ? <Text style={styles.lastNameError}>{lastNameError}</Text> : null}
           </View>
         </View>
 
         <View style={styles.inputIconContainer}>
-          <Entypo
-            style={styles.nameIcon}
-            name="email"
-            size={30}
-            color={COLORS.primary}
-          />
+          <Entypo style={styles.nameIcon} name="email" size={30} color={COLORS.primary} />
         </View>
         <View>
           <TextInput
@@ -146,20 +116,13 @@ const UserInfoScreen = ({ navigation }) => {
             value={email}
             error={formSubmitted && (!email || emailError)}
             autoCapitalize="none"
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={text => setEmail(text)}
           />
-          {emailError ? (
-            <Text style={styles.emailAddressError}>{emailError}</Text>
-          ) : null}
+          {emailError ? <Text style={styles.emailAddressError}>{emailError}</Text> : null}
         </View>
 
         <View style={styles.inputIconContainer}>
-          <Entypo
-            style={styles.nameIcon}
-            name="phone"
-            size={30}
-            color={COLORS.primary}
-          />
+          <Entypo style={styles.nameIcon} name="phone" size={30} color={COLORS.primary} />
         </View>
         <View style={styles.nameContainer}>
           <TextInput
@@ -169,17 +132,13 @@ const UserInfoScreen = ({ navigation }) => {
             keyboardType="number-pad"
             error={formSubmitted && !phone}
             value={phone}
-            onChangeText={(text) => setPhone(text.replace(/[^+0-9]/g, ""))}
+            onChangeText={text => setPhone(text.replace(/[^+0-9]/g, ""))}
           />
         </View>
 
         {error ? <Text style={styles.errorMessageText}>{error}</Text> : null}
 
-        <Button
-          mode="contained"
-          style={styles.submitButton}
-          onPress={() => onSubmit()}
-        >
+        <Button mode="contained" style={styles.submitButton} onPress={() => onSubmit()}>
           <Text style={{ color: "#fff" }}>Save</Text>
         </Button>
       </ScrollView>
