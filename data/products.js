@@ -7,11 +7,10 @@ export const PRODUCTS = [
     ],
     title: "KJ87",
     subtitle: "MPOW ",
-    category: "Electronics",
+    category: "Computing",
     price: 35.12,
     amount: 0,
     discount: 24,
-
     description:
       "Built in Microphone, Hi-fi Stereo Sound: The kids headphones with mic is convenient for kids' on-line learning and communication at home; Stereo kids headphones with excellent sound effect, the best partner for your children to study, listen to music, watch movie, play game, talk with friends and have fun, no matter at home, in school or travel (NOTE: The built-in microphone DOESN'T work on desktop computer",
   },

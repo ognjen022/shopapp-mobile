@@ -9,7 +9,9 @@ import { PRODUCTS } from "../data/products";
 import COLORS from "../consts/colors";
 
 const ShopScreen = ({ navigation }) => {
+  const category = navigation.getParam("category");
   const cartItems = useSelector(state => state.cart);
+  const items = PRODUCTS.filter(item => item.category === category);
   const [length, setLength] = useState(0);
 
   const handleUpdateTotalLength = () => {
@@ -34,7 +36,7 @@ const ShopScreen = ({ navigation }) => {
 
   return (
     <View>
-      <FlatList data={PRODUCTS} keyExtractor={item => item.id.toString()} renderItem={({ item }) => <Product product={item} navigation={navigation} />} />
+      <FlatList data={items} keyExtractor={item => item.id.toString()} renderItem={({ item }) => <Product product={item} navigation={navigation} />} />
     </View>
   );
 };
@@ -56,17 +58,17 @@ ShopScreen.navigationOptions = navData => {
       </Text>
     ),
     headerTitleStyle: { color: COLORS.primary, fontWeight: "bold" },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Menu"
-          iconName="menu"
-          onPress={() => {
-            navData.navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
+    // headerLeft: () => (
+    //   <HeaderButtons HeaderButtonComponent={HeaderButton}>
+    //     <Item
+    //       title="Menu"
+    //       iconName="menu"
+    //       onPress={() => {
+    //         navData.navigation.toggleDrawer();
+    //       }}
+    //     />
+    //   </HeaderButtons>
+    // ),
     headerRight: () => (
       <>
         <HeaderButtons HeaderButtonComponent={HeaderButton}>

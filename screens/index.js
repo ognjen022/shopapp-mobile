@@ -7,3 +7,4 @@ export { default as ShopScreen } from "./ShopScreen";
 export { default as UserAddressScreen } from "./UserAddressScreen";
 export { default as PaymentMethodScreen } from "./PaymentMethodScreen";
 export { default as UserInfoScreen } from "./UserInfoScreen";
+export { default as CategoriesScreen } from "./CategoriesScreen";
