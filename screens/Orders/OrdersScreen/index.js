@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-import { HeaderButton } from "../components";
+import { HeaderButton } from "../../../components";
+import styles from "./styles";
 
 const OrdersScreen = () => {
   return (
@@ -12,7 +13,7 @@ const OrdersScreen = () => {
   );
 };
 
-OrdersScreen.navigationOptions = navData => {
+export const screenOptions = navData => {
   return {
     headerTitle: () => null,
     headerLeft: () => (
@@ -28,7 +29,5 @@ OrdersScreen.navigationOptions = navData => {
     ),
   };
 };
-
-const styles = StyleSheet.create({});
 
 export default OrdersScreen;

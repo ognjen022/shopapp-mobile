@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Text, TextInput, StyleSheet, Dimensions, ScrollView } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import { Text, TextInput, ScrollView } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { Button } from "react-native-paper";
-import { PRODUCTS } from "../data/products";
-import COLORS from "../consts/colors";
+import * as ImagePicker from "expo-image-picker";
 
-const EditProductScreen = ({ navigation }) => {
-  const mode = navigation.getParam("mode");
-  const id = navigation.getParam("id");
+import { PRODUCTS } from "../../../data/products";
+import COLORS from "../../../consts/colors";
+import styles from "./styles";
+
+const EditProductScreen = ({ route }) => {
+  const id = route.params?.id;
   const product = PRODUCTS.find(product => product.id === id);
   const initialState =
     product && Object.keys(product).length > 0
@@ -142,8 +143,8 @@ const EditProductScreen = ({ navigation }) => {
   );
 };
 
-EditProductScreen.navigationOptions = navData => {
-  const mode = navData.navigation.getParam("mode");
+export const screenOptions = navData => {
+  const mode = navData.route.params?.mode;
   return {
     headerTitle: () =>
       mode === "add" ? (
@@ -172,43 +173,5 @@ EditProductScreen.navigationOptions = navData => {
     headerBackTitle: "Back",
   };
 };
-
-const styles = StyleSheet.create({
-  input: {
-    padding: 10,
-    marginTop: 0,
-    fontSize: 18,
-    borderWidth: 2,
-    borderRadius: 5,
-    borderColor: COLORS.primary,
-    marginBottom: 15,
-    width: "85%",
-    alignSelf: "center",
-  },
-  label: {
-    margin: 5,
-    fontSize: 18,
-    marginLeft: 20,
-    color: COLORS.primary,
-    alignSelf: "center",
-  },
-  submitButton: {
-    marginVertical: 30,
-    paddingVertical: 10,
-    borderRadius: 5,
-    backgroundColor: COLORS.primary,
-    width: Dimensions.get("window").width / 2,
-    alignSelf: "center",
-    borderRadius: 30,
-  },
-  imageButton: {
-    marginVertical: 10,
-    borderRadius: 5,
-    backgroundColor: COLORS.primary,
-    width: Dimensions.get("window").width / 2,
-    alignSelf: "center",
-    borderRadius: 30,
-  },
-});
 
 export default EditProductScreen;

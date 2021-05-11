@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Dimensions, Text } from "react-native";
+import { View, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Badge } from "react-native-paper";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -7,8 +7,9 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
-import { HeaderButton } from "../components";
-import COLORS from "../consts/colors";
+import { HeaderButton } from "../../../components";
+import COLORS from "../../../consts/colors";
+import styles from "./styles";
 
 const CategoriesScreen = ({ navigation }) => {
   return (
@@ -37,8 +38,8 @@ const CategoriesScreen = ({ navigation }) => {
   );
 };
 
-CategoriesScreen.navigationOptions = navData => {
-  const cartTotalLength = navData.navigation.getParam("length") || 0;
+export const screenOptions = navData => {
+  const cartTotalLength = navData.route.params?.length || 0;
 
   return {
     headerTitle: () => (
@@ -92,38 +93,5 @@ CategoriesScreen.navigationOptions = navData => {
     ),
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  categoryCard: {
-    backgroundColor: COLORS.primary,
-    borderWidth: 1,
-    borderColor: "white",
-    shadowColor: "#000",
-    margin: Dimensions.get("window").width * 0.05,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    width: Dimensions.get("window").width * 0.4,
-    shadowOpacity: 0.25,
-    shadowRadius: 5,
-    elevation: 5,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    borderRadius: 20,
-  },
-  categoryIcon: {
-    textAlign: "center",
-  },
-  categoryText: {
-    textAlign: "center",
-    color: "white",
-    fontSize: 20,
-  },
-});
 
 export default CategoriesScreen;

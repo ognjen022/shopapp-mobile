@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Dimensions, ScrollView, KeyboardAvoidingView } from "react-native";
+import { View, Text, Dimensions, ScrollView, KeyboardAvoidingView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { TextInput, Button } from "react-native-paper";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import Spinner from "react-native-loading-spinner-overlay";
 
-import { setAddress } from "../store/actions/addressActions";
-import COLORS from "../consts/colors";
+import { setAddress } from "../../../store/actions/addressActions";
+import COLORS from "../../../consts/colors";
+import styles from "./styles";
 
 const { width, height } = Dimensions.get("window");
 
@@ -40,7 +41,7 @@ const UserAddressScreen = ({ navigation }) => {
           setLoading(false);
           return;
         }
-        let { status } = await Location.requestPermissionsAsync();
+        let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
           setLoading(false);
           return;
@@ -133,7 +134,7 @@ const UserAddressScreen = ({ navigation }) => {
   );
 };
 
-UserAddressScreen.navigationOptions = {
+export const screenOptions = {
   headerTitle: () => (
     <Text
       style={{
@@ -147,27 +148,5 @@ UserAddressScreen.navigationOptions = {
     </Text>
   ),
 };
-
-const styles = StyleSheet.create({
-  spinnerTextStyle: {
-    color: COLORS.primary,
-  },
-  errorMessageText: {
-    color: "red",
-    fontSize: 20,
-    marginTop: 10,
-    textAlign: "center",
-  },
-  confirmButton: {
-    marginTop: 30,
-    marginBottom: 30,
-    borderWidth: 2,
-    borderColor: COLORS.primary,
-  },
-  map: {
-    height: 300,
-  },
-  wideInput: { width: 300 },
-});
 
 export default UserAddressScreen;
