@@ -31,7 +31,8 @@ const DrawerContent = props => (
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      initialRoute="Shop"
+      drawerStyle={{ width: "50%" }}
+      initialRouteName="Shop"
       drawerContent={DrawerContent}
       drawerContentOptions={{
         activeTintColor: COLORS.accent,

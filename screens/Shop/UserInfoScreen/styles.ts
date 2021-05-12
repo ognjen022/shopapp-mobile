@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
   submitButton: {
     marginVertical: 40,
     paddingVertical: 10,
-    borderRadius: 5,
     backgroundColor: COLORS.primary,
     width: Dimensions.get("window").width / 2,
     alignSelf: "center",

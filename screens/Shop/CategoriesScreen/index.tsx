@@ -11,7 +11,9 @@ import { HeaderButton } from "../../../components";
 import COLORS from "../../../consts/colors";
 import styles from "./styles";
 
-const CategoriesScreen = ({ navigation }) => {
+const CategoriesScreen = (props: any) => {
+  const { navigation } = props;
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate("Shop", { category: "Electronics" })}>
@@ -38,8 +40,8 @@ const CategoriesScreen = ({ navigation }) => {
   );
 };
 
-export const screenOptions = navData => {
-  const cartTotalLength = navData.route.params?.length || 0;
+export const screenOptions = (navData: any) => {
+  const cartTotalLength: number = navData.route.params?.length || 0;
 
   return {
     headerTitle: () => (
@@ -54,7 +56,6 @@ export const screenOptions = navData => {
         Categories
       </Text>
     ),
-    headerTitleStyle: { color: COLORS.primary, fontWeight: "bold" },
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item

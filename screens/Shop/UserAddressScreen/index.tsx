@@ -17,7 +17,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const UserAddressScreen = ({ navigation }) => {
-  const addressInfo = useSelector(state => state.address);
+  const addressInfo = useSelector((state: any) => state.address);
 
   const [country, setCountry] = useState(addressInfo.country);
   const [city, setCity] = useState(addressInfo.city);

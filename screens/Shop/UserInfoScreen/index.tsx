@@ -10,7 +10,7 @@ import COLORS from "../../../consts/colors";
 import styles from "./styles";
 
 const UserInfoScreen = ({ navigation }) => {
-  const userInfo = useSelector(state => state.user);
+  const userInfo = useSelector((state: any) => state.user);
 
   const [firstName, setFirstName] = useState(userInfo.firstName);
   const [lastName, setLastName] = useState(userInfo.lastName);

@@ -11,7 +11,7 @@ import styles from "./styles";
 
 const ShopScreen = ({ navigation, route }) => {
   const category = route.params?.category;
-  const cartItems = useSelector(state => state.cart);
+  const cartItems = useSelector((state: any) => state.cart);
   const items = PRODUCTS.filter(item => item.category === category);
   const [length, setLength] = useState(0);
 
@@ -82,7 +82,6 @@ export const screenOptions = navData => {
         Shop
       </Text>
     ),
-    headerTitleStyle: { color: COLORS.primary, fontWeight: "bold" },
   };
 };
 

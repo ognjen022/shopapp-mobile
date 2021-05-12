@@ -14,7 +14,7 @@ import styles from "./styles";
 
 const ProductDetailScreen = ({ navigation, route }) => {
   const product = route.params?.product;
-  const cartItems = useSelector(state => state.cart);
+  const cartItems = useSelector((state: any) => state.cart);
   const [length, setLength] = useState(0);
   const dispatch = useDispatch();
 
@@ -120,7 +120,6 @@ export const screenOptions = navData => {
         {product.title}
       </Text>
     ),
-    headerTitleStyle: { color: COLORS.primary, fontWeight: "bold" },
   };
 };
 

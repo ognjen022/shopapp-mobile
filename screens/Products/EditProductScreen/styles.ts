@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
   submitButton: {
     marginVertical: 30,
     paddingVertical: 10,
-    borderRadius: 5,
     backgroundColor: COLORS.primary,
     width: Dimensions.get("window").width / 2,
     alignSelf: "center",
@@ -32,7 +31,6 @@ const styles = StyleSheet.create({
   },
   imageButton: {
     marginVertical: 10,
-    borderRadius: 5,
     backgroundColor: COLORS.primary,
     width: Dimensions.get("window").width / 2,
     alignSelf: "center",

@@ -6,13 +6,14 @@ import { useSelector } from "react-redux";
 import { Entypo } from "@expo/vector-icons";
 
 import { CartItem } from "../../../components";
+import Product from "../../../models/Product";
 import COLORS from "../../../consts/colors";
 import styles from "./styles";
 
 const CartScreen = ({ navigation }) => {
-  const cartProducts = useSelector(state => state.cart);
-  const addressInfo = useSelector(state => state.address);
-  const userInfo = useSelector(state => state.user);
+  const cartProducts = useSelector((state: any) => state.cart);
+  const addressInfo = useSelector((state: any) => state.address);
+  const userInfo = useSelector((state: any) => state.user);
   const SHIPPING_COST = 10;
 
   if (cartProducts.length === 0)
@@ -22,7 +23,7 @@ const CartScreen = ({ navigation }) => {
       </View>
     );
 
-  const getTotalPrice = items => {
+  const getTotalPrice = (items: Product[]) => {
     let total = 0;
     items.forEach(item => {
       if (item.discount === 0) return (total = total + item.price * item.amount);
@@ -35,7 +36,7 @@ const CartScreen = ({ navigation }) => {
 
   const getTotalLength = () => {
     let length = 0;
-    cartProducts.forEach(item => {
+    cartProducts.forEach((item: Product) => {
       length = length + 1;
       if (item.amount > 1) {
         length = length - 1;
@@ -154,7 +155,6 @@ export const screenOptions = {
       Cart
     </Text>
   ),
-  headerBackTitle: () => "Back",
 };
 
 export default CartScreen;

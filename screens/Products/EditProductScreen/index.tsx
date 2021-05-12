@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, TextInput, ScrollView } from "react-native";
+import { Text, TextInput, ScrollView, Platform } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { Button } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
@@ -11,15 +11,15 @@ import styles from "./styles";
 const EditProductScreen = ({ route }) => {
   const id = route.params?.id;
   const product = PRODUCTS.find(product => product.id === id);
-  const initialState =
+  const initialState: any =
     product && Object.keys(product).length > 0
       ? { ...product }
       : {
           title: "",
           subtitle: "",
           category: "",
-          price: "",
-          discount: "",
+          price: 0,
+          discount: 0,
           description: "",
           images: [],
         };
@@ -38,7 +38,7 @@ const EditProductScreen = ({ route }) => {
   }, []);
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    let result: any = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
@@ -99,7 +99,7 @@ const EditProductScreen = ({ route }) => {
         onChangeText={text =>
           setProductValues({
             ...productValues,
-            price: !isNaN(text) ? parseInt(text) : "",
+            price: text,
           })
         }
       />
@@ -111,7 +111,7 @@ const EditProductScreen = ({ route }) => {
         onChangeText={text =>
           setProductValues({
             ...productValues,
-            discount: !isNaN(text) ? parseInt(text) : "",
+            discount: text,
           })
         }
       />

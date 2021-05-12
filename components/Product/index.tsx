@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import { Avatar, Button, Card, Paragraph, Badge } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -10,7 +10,7 @@ import styles from "./styles";
 
 const LeftContent = props => <Avatar.Icon {...props} icon="electron-framework" />;
 
-const RightContent = product => (
+const RightContent = (product: any) => (
   <Card.Content>
     {product.discount > 0 ? <Text style={styles.originalPrice}>${product.price.toFixed(2)}</Text> : null}
     <Badge visible={product.discount > 0} size={35} style={styles.badge}>
